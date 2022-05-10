@@ -1,4 +1,5 @@
 let XMLhttpRequest = require('xmlhttprequest').XMLHttpRequest;
+let API = 'https://rickandmortyapi.com/api/character/';
 
 function fetchData(url_api, callback) {
     let xhttp = new XMLhttpRequest();
@@ -32,3 +33,16 @@ function fetchData(url_api, callback) {
 //C) los que son fron-end y están aprendiendo de Back, el profesor uso GET por que hace parte de los método http, en este caso necesitamos pedir información a las url ,màs información: https://developer.mozilla.org/es/docs/Web/HTTP/Methods
 
 //D)Por ultimo recomiendo una escucha atenta a lo que dice el profesor por que el explica el por que de cada cosa que hace y si no la conoces recomiendo buscarlas en Internet y asì avanzas en el curso.
+
+fetchData(API,function (error1, data1) {
+    if(error1) return console.error(error1);
+    fetchData(API + data1.results[0].id, function(error2, data2) {
+        if(error2) return console.error(error2);
+        fetchData(data2.origin.url, function(error3, data3) {
+            if(error3) return console.error(error3);
+            console.log(data1.info.count);
+            console.log(data2.name);
+            console.log(data3.dimension);
+        });
+    })
+})
